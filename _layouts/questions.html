@@ -1,0 +1,60 @@
+---
+layout: default
+---
+
+<div class="home">
+
+  {%- if page.title -%}
+    <h1 class="page-heading">{{ page.title }}</h1>
+  {%- endif -%}
+
+  <div class="wrapper">
+    <div class="home-col-wrapper">
+
+      {{ content }}
+
+      <table>
+      {%- for question in site.data.questions -%}
+        <tr>
+          <td>question.id</td>
+          <td>question.text</td>
+        </tr>
+      {%- endfor -%}
+      </table>
+    </div>
+  </div>
+
+  <!-- <ul class="post-list">
+    {%- for post in site.posts -%}
+    <li> -->
+      <!-- {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%} -->
+      <!-- <span class="post-meta">{{ post.date | date: date_format }}</span> -->
+      <!-- <h3>
+        <a class="post-link" href="{{ post.url | relative_url }}">
+          {{ post.title | escape }}
+        </a>
+      </h3>
+      {{ post.description }}
+    </li>
+    {%- endfor -%}
+  </ul> -->
+
+  <!-- <div class="wrapper">
+    <div class="home-col-wrapper">
+        {% for proj in page.projects %}
+        
+          <div class="proj-section">
+            <h1 class="proj-header">{{ proj.name }}</h1>
+            <div class="home-col home-col-1">
+              {{ proj.description }}
+            </div>
+            <div class="home-col home-col-2">
+                <img src="{{ proj.image_link }}" alt="{{ proj.alt_text }}" >
+            </div>
+          </div>
+
+        {% endfor %}
+    </div>
+  </div> -->
+
+</div>

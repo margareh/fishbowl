@@ -16,8 +16,8 @@ layout: default
       <table>
       {%- for question in site.data.questions -%}
         <tr>
-          <td>question.id</td>
-          <td>question.text</td>
+          <td>{{ question.id }}</td>
+          <td>{{ question.text }}</td>
         </tr>
       {%- endfor -%}
       </table>

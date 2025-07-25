@@ -33,7 +33,6 @@ plugins:
 
 header_pages:
  - index.markdown
- - about.markdown
  - questions.markdown
 
 # Exclude from processing.

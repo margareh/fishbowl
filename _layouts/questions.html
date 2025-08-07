@@ -14,13 +14,23 @@ layout: default
       {{ content }}
 
       <table>
-      {%- for question in site.data.questions -%}
+        <thead class="fixed">
+          <tr>
+            <th class="col1">ID</th>
+            <th class="col2">Question</th>
+            <th class="col3">Rating</th>
+          </tr>
+        </thead>
+        <tbody class="scrollable">
+        {%- for question in site.data.questions -%}
         <tr>
-          <td>{{ question.id }}</td>
-          <td>{{ question.text }}</td>
+          <td class="col1">{{ question.id }}</td>
+          <td class="col2">{{ question.text }}</td>
+          <td class="col3"></td>
         </tr>
-      {%- endfor -%}
-      </table>
+        {%- endfor -%}
+        </tbody>
+    </table>
     </div>
   </div>
 

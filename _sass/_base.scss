@@ -242,8 +242,9 @@ pre {
  * Tables
  */
 table {
+  margin: 0px auto;
   margin-bottom: $spacing-unit;
-  width: 100%;
+  width: 80%;
   text-align: $table-text-align;
   color: lighten($text-color, 18%);
   border-collapse: collapse;
@@ -252,6 +253,7 @@ table {
     &:nth-child(even) {
       background-color: lighten($grey-color-light, 6%);
     }
+    width: 100%;
   }
   th, td {
     padding: ($spacing-unit / 3) ($spacing-unit / 2);
@@ -264,4 +266,28 @@ table {
   td {
     border: 1px solid $grey-color-light;
   }
+  thead.fixed {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: block;
+    width: 100%;
+  }
+
+  tbody.scrollable {
+    display: block;
+    overflow-y: auto;
+    max-height: 750px;
+    width: 100%;
+  }
+  .col1 {
+    width: 5%;
+  }
+  .col2 {
+    width: 85%;
+  }
+  .col3 {
+    width: 10%;
+  }
+
 }

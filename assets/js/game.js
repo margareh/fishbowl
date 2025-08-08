@@ -19,6 +19,9 @@ function start() {
     // set up 
     btn = document.getElementById("startBtn");
     btn.parentNode.removeChild(btn); // deletes the start game button
+    d = document.getElementById("game");
+    d.classList.add("game-play");
+    d.classList.remove("game-start");
     game_init = true;
 
 }
@@ -26,7 +29,11 @@ function start() {
 // Quit the game
 function quit() {
     // go back to original setup
-    document.getElementById("game").innerHTML = '<button id="startBtn" onclick="playGame()">Start the Game</button>';
+    d = document.getElementById("game");
+    d.classList.add("game-start");
+    d.classList.remove("game-play");
+    d.innerHTML = '<button class="game" id="startBtn" onclick="playGame()">Start the Game</button>';
+    game_init = false;
 }
 
 // Show a question
@@ -44,10 +51,10 @@ function pickQ() {
     clicks += 1;
 
     // continue displaying this and picking new questions
-    questionHtml = '<p><b>Question:</b> ' + q + '</p>';
-    rateHtml = '<p><b>Rating:</b> '+ r +'</p>';
-    nextBtnHtml = '<button id="nextBtn" onclick="playGame()">Next</button>';
-    quitBtnHtml = '<button id="quitBtn" onclick="quit()">Quit</button>';
+    questionHtml = '<p class="game"><b>Question:</b> ' + q + '<br/>';
+    rateHtml = '<b>Rating:</b> '+ r +'</p><div class="buttons">';
+    nextBtnHtml = '<button class="game" id="nextBtn" onclick="playGame()">Next</button>';
+    quitBtnHtml = '<button class="game" id="quitBtn" onclick="quit()">Quit</button></div>';
     newHtml = questionHtml + rateHtml + nextBtnHtml + quitBtnHtml;
     document.getElementById("game").innerHTML = newHtml;
 }

@@ -66,6 +66,8 @@ function pickQ() {
     }
     clicks += 1;
 
+    // stars = '<span class="fa fa-star"></span>';
+
     // continue displaying this and picking new questions
     questionHtml = '<p class="game"><b>Question:</b> ' + q + '<br/>';
     rateHtml = '<b>Rating:</b> '+ r +'</p><div class="buttons">';

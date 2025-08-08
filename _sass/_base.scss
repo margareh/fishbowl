@@ -326,8 +326,6 @@ div.game-start {
   padding: 25px 25px 50px 25px;
   display: flex-column;
   align-items: center;
-  height: 50px;
-
 }
 
 div.game-play {
@@ -336,7 +334,7 @@ div.game-play {
   width: 70%;
   display: flex-column;
   align-items: center;
-  height: 200px;
+  padding: 25px;
   border: 3px solid $cmu-color;
 }
 

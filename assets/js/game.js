@@ -2,19 +2,25 @@
 title: game.js
 ---
 
-// Load and randomize questions
+// load the data
 var n = '{{ site.data.questions | size }}';
-var rows = '{{ site.data.questions }}';
+var rows = JSON.parse('{{ site.data.questions | jsonify }}');
 // '{% assign n = site.data.questions | size %}';
 // '{% assign rows = site.data.questions | sample: n %}';
 // var rows = '{{ site.data.questions | json }}';
-var i = 0;
+var clicks = 0;
+var q;
+var game_init = false;
+
+// randomize data
 
 // Start the game
 function start() {
     // set up 
     btn = document.getElementById("startBtn");
     btn.parentNode.removeChild(btn); // deletes the start game button
+    game_init = true;
+
 }
 
 // Quit the game
@@ -26,12 +32,24 @@ function quit() {
 // Show a question
 function pickQ() {
     // Quit if we've gone through all of the questions
-    if (i+1 >= n) {
+    if (clicks+1 >= n) {
         quit();
     }
-    i = i+1;
-    // return '{{ rows[i].text }}';
-    return rows;
+    
+    q = rows[clicks].text;
+    r = rows[clicks].average_rating;
+    if (rows[clicks].average_rating == null) {
+        r = 'Not available';
+    }
+    clicks += 1;
+
+    // continue displaying this and picking new questions
+    questionHtml = '<p><b>Question:</b> ' + q + '</p>';
+    rateHtml = '<p><b>Rating:</b> '+ r +'</p>';
+    nextBtnHtml = '<button id="nextBtn" onclick="playGame()">Next</button>';
+    quitBtnHtml = '<button id="quitBtn" onclick="quit()">Quit</button>';
+    newHtml = questionHtml + rateHtml + nextBtnHtml + quitBtnHtml;
+    document.getElementById("game").innerHTML = newHtml;
 }
 
 // Rate the question
@@ -41,16 +59,11 @@ function rateQuestion() {
 
 // High-level function for playing the game
 function playGame() {
-    // start the game
-    start();
-    q = pickQ();
 
-    // continue displaying this and picking new questions
-    questionHtml = '<p><b>Question:</b> ' + q + '</p>';
-    rateHtml = '<p><b>Rating:</b> </p>';
-    nextBtnHtml = '<button id="nextBtn" onclick="q=pickQ();">Next</button>';
-    quitBtnHtml = '<button id="quitBtn" onclick="quit();">Quit</button>';
-    newHtml = questionHtml + rateHtml + nextBtnHtml + quitBtnHtml;
-    document.getElementById("game").innerHTML = newHtml;
+    // start the game
+    if (!game_init) {
+        start();
+    }
+    pickQ();
 
 }

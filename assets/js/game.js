@@ -44,7 +44,6 @@ function start() {
 
 // Quit the game
 function quit() {
-    // go back to original setup
     d = document.getElementById("game");
     d.classList.add("game-start");
     d.classList.remove("game-play");
@@ -54,27 +53,35 @@ function quit() {
 
 // Show a question
 function pickQ() {
+
+    d = document.getElementById("game");
+
     // Quit if we've gone through all of the questions
-    if (clicks+1 >= n) {
-        quit();
+    if (clicks+1 >= 2) {
+        d.innerHTML = '<p class="game">That\'s it! There are no more questions :(</p>';
+        setTimeout(function(){quit();},1500);
+        clicks = 0;
+    } else {
+
+        q = rows[clicks].text;
+        r = rows[clicks].average_rating;
+        if (rows[clicks].average_rating == null) {
+            r = 'Not available';
+        }
+        clicks += 1;
+
+        // stars = '<span class="fa fa-star"></span>';
+
+        // continue displaying this and picking new questions
+        questionHtml = '<p class="game"><b>Question:</b> ' + q + '<br/>';
+        rateHtml = '<b>Rating:</b> '+ r +'</p><div class="buttons">';
+        nextBtnHtml = '<button class="game" id="nextBtn" onclick="playGame()">Next</button>';
+        quitBtnHtml = '<button class="game" id="quitBtn" onclick="quit()">Quit</button></div>';
+        newHtml = questionHtml + rateHtml + nextBtnHtml + quitBtnHtml;
+        d.innerHTML = newHtml;
+
     }
     
-    q = rows[clicks].text;
-    r = rows[clicks].average_rating;
-    if (rows[clicks].average_rating == null) {
-        r = 'Not available';
-    }
-    clicks += 1;
-
-    // stars = '<span class="fa fa-star"></span>';
-
-    // continue displaying this and picking new questions
-    questionHtml = '<p class="game"><b>Question:</b> ' + q + '<br/>';
-    rateHtml = '<b>Rating:</b> '+ r +'</p><div class="buttons">';
-    nextBtnHtml = '<button class="game" id="nextBtn" onclick="playGame()">Next</button>';
-    quitBtnHtml = '<button class="game" id="quitBtn" onclick="quit()">Quit</button></div>';
-    newHtml = questionHtml + rateHtml + nextBtnHtml + quitBtnHtml;
-    document.getElementById("game").innerHTML = newHtml;
 }
 
 // Rate the question

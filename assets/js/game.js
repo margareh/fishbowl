@@ -57,7 +57,7 @@ function pickQ() {
     d = document.getElementById("game");
 
     // Quit if we've gone through all of the questions
-    if (clicks+1 >= 2) {
+    if (clicks+1 >= n) {
         d.innerHTML = '<p class="game">That\'s it! There are no more questions :(</p>';
         setTimeout(function(){quit();},1500);
         clicks = 0;

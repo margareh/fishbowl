@@ -12,7 +12,7 @@ var clicks = 0;
 var q;
 var game_init = false;
 
-// randomize data
+// Randomize data
 function shuffle(array) {
   let currentIndex = array.length;
 
@@ -70,14 +70,15 @@ function pickQ() {
         }
         clicks += 1;
 
-        // stars = '<span class="fa fa-star"></span>';
+        star = '<span>&#9734;</span>';
+        dstar = '<div class="rating">'+star+star+star+star+star+'</div>';
 
         // continue displaying this and picking new questions
-        questionHtml = '<p class="game"><b>Question:</b> ' + q + '<br/>';
-        rateHtml = '<b>Rating:</b> '+ r +'</p><div class="buttons">';
-        nextBtnHtml = '<button class="game" id="nextBtn" onclick="playGame()">Next</button>';
+        questionHtml = '<p class="game"><b>Question:</b> ' + q + '</p>';
+        // rateHtml = '<p class="game"><b>Rating:</b> '+ dstar +'</p>';
+        nextBtnHtml = '<div class="buttons"><button class="game" id="nextBtn" onclick="playGame()">Next</button>';
         quitBtnHtml = '<button class="game" id="quitBtn" onclick="quit()">Quit</button></div>';
-        newHtml = questionHtml + rateHtml + nextBtnHtml + quitBtnHtml;
+        newHtml = questionHtml + dstar + nextBtnHtml + quitBtnHtml;
         d.innerHTML = newHtml;
 
     }

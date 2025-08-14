@@ -309,7 +309,7 @@ button.game {
   margin: 2px 4px;
 }
 
-button:hover {
+button.game:hover {
   background-color: $cmu-color-dark;
 }
 
@@ -338,8 +338,27 @@ div.game-play {
   border: 3px solid $cmu-color;
 }
 
+div.addtl {
+  justify-content: left;
+  width: 90%;
+}
+
 div.buttons {
   display: flex;
+}
+
+button.addtl {
+  background-color: #FFFFFF;
+  border: none;
+  color: $cmu-color-dark;
+  margin-bottom: 20px;
+  display: inline-block;
+  font-size: 16px;
+  text-decoration: underline;
+}
+
+button.addtl:hover {
+  color: darken($cmu-color-dark, 15%);
 }
 
 p.game {
@@ -347,6 +366,15 @@ p.game {
   line-height: 32px;
   font-size: 18px;
   width: 90%;
+}
+
+p.hidden {
+  display: none;
+}
+
+p.show {
+  display: inline-block;
+  font-size: 16px;
 }
 
 .rating {
@@ -368,6 +396,12 @@ p.game {
 .rating > span:hover ~ span:before {
   content: "\2605";
   position: absolute;
-  color: rgb(255, 0, 0);
+  color: $cmu-color;
   cursor: pointer;
+}
+
+.rating > span.active:before {
+  content: "\2605";
+  position: absolute;
+  color: $cmu-color;
 }

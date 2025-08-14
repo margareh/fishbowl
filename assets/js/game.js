@@ -64,30 +64,69 @@ function pickQ() {
     } else {
 
         q = rows[clicks].text;
-        r = rows[clicks].average_rating;
-        if (rows[clicks].average_rating == null) {
-            r = 'Not available';
-        }
-        clicks += 1;
+        f = rows[clicks].follow_ups;
 
         star = '<span>&#9734;</span>';
         dstar = '<div class="rating">'+star+star+star+star+star+'</div>';
 
         // continue displaying this and picking new questions
         questionHtml = '<p class="game"><b>Question:</b> ' + q + '</p>';
-        // rateHtml = '<p class="game"><b>Rating:</b> '+ dstar +'</p>';
+        if (f != null) {
+            extraHtml = '<div class="addtl"><button class="addtl" onclick="addtlInfo()">Follow-ups</button><p class="hidden game" id="dropTxt">'+f+'</p></div>';
+        } else {
+            extraHtml = '';
+        }
         nextBtnHtml = '<div class="buttons"><button class="game" id="nextBtn" onclick="playGame()">Next</button>';
         quitBtnHtml = '<button class="game" id="quitBtn" onclick="quit()">Quit</button></div>';
-        newHtml = questionHtml + dstar + nextBtnHtml + quitBtnHtml;
+        newHtml = questionHtml + extraHtml + dstar + nextBtnHtml + quitBtnHtml;
         d.innerHTML = newHtml;
+
+        // // question rating
+        // document.querySelector('rating').addEventListener('click', function(e){
+        //     let count = 0;
+        //     let action = 'add';
+        //     for (const span of this.children) {
+        //         if (action == 'add') count += 1;
+        //         span.classList[action]('active');
+        //         if (span == e.target) action = 'remove';
+        //     }
+        //     // rateQuestion(e);
+        // });
+
+        clicks += 1;
+
 
     }
     
 }
 
+// Show additional info
+function addtlInfo() {
+    document.getElementById("dropTxt").classList.toggle("show");
+    document.getElementById("dropTxt").classList.toggle("hidden");
+}
+
 // Rate the question
-function rateQuestion() {
-    
+function rateQuestion(e) {
+    let count = 0;
+    let action = 'add';
+    for (const span of this.children) {
+        if (action == 'add') count += 1;
+        span.classList[action]('active');
+        if (span == e.target) action = 'remove';
+    }
+
+    // update dataset with new rating
+    avg_r = rows[clicks].average_rating;
+    n_r = rows[clicks].num_ratings;
+    new_avg = (avg_r*n_r + r) / (n_r + 1);
+    n_r += 1;
+
+    // save csv with new dataset
+    rows[clicks].average_rating = new_avg;
+    rows[clicks].num_ratings = n_r;
+    json = JSON.stringify(rows);
+
 }
 
 // High-level function for playing the game

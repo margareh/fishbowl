@@ -5,9 +5,6 @@ title: game.js
 // load the data
 var n = '{{ site.data.questions | size }}';
 var rows = JSON.parse('{{ site.data.questions | jsonify }}');
-// '{% assign n = site.data.questions | size %}';
-// '{% assign rows = site.data.questions | sample: n %}';
-// var rows = '{{ site.data.questions | json }}';
 var clicks = 0;
 var q;
 var game_init = false;
@@ -66,8 +63,11 @@ function pickQ() {
         q = rows[clicks].text;
         f = rows[clicks].follow_ups;
 
-        star = '<span>&#9734;</span>';
-        dstar = '<div class="rating">'+star+star+star+star+star+'</div>';
+        stars = '<div class="rating">'
+        for (let i = 4; i >= 0; i--){
+            stars += '<span class="star" onclick="rateQuestion('+(i+1)+')">&#9734;</span>';
+        }
+        stars += '</div>';
 
         // continue displaying this and picking new questions
         questionHtml = '<p class="game"><b>Question:</b> ' + q + '</p>';
@@ -78,23 +78,10 @@ function pickQ() {
         }
         nextBtnHtml = '<div class="buttons"><button class="game" id="nextBtn" onclick="playGame()">Next</button>';
         quitBtnHtml = '<button class="game" id="quitBtn" onclick="quit()">Quit</button></div>';
-        newHtml = questionHtml + extraHtml + dstar + nextBtnHtml + quitBtnHtml;
+        newHtml = questionHtml + extraHtml + stars + nextBtnHtml + quitBtnHtml;
         d.innerHTML = newHtml;
 
-        // // question rating
-        // document.querySelector('rating').addEventListener('click', function(e){
-        //     let count = 0;
-        //     let action = 'add';
-        //     for (const span of this.children) {
-        //         if (action == 'add') count += 1;
-        //         span.classList[action]('active');
-        //         if (span == e.target) action = 'remove';
-        //     }
-        //     // rateQuestion(e);
-        // });
-
         clicks += 1;
-
 
     }
     
@@ -107,25 +94,32 @@ function addtlInfo() {
 }
 
 // Rate the question
-function rateQuestion(e) {
-    let count = 0;
-    let action = 'add';
-    for (const span of this.children) {
-        if (action == 'add') count += 1;
-        span.classList[action]('active');
-        if (span == e.target) action = 'remove';
+function rateQuestion(n) {
+
+    stars = document.getElementsByClassName("star");
+
+    // reset class names
+    let i = 0;
+    while (i < 5) {
+        stars[i].className = "star";
+        i++;
     }
 
-    // update dataset with new rating
-    avg_r = rows[clicks].average_rating;
-    n_r = rows[clicks].num_ratings;
-    new_avg = (avg_r*n_r + r) / (n_r + 1);
-    n_r += 1;
+    // add coloring
+    for (let i = 4; i > (4-n); i--){
+        stars[i].classList.add("active");
+    }
 
-    // save csv with new dataset
-    rows[clicks].average_rating = new_avg;
-    rows[clicks].num_ratings = n_r;
-    json = JSON.stringify(rows);
+    // // update dataset with new rating
+    // avg_r = rows[clicks].average_rating;
+    // n_r = rows[clicks].num_ratings;
+    // new_avg = (avg_r*n_r + r) / (n_r + 1);
+    // n_r += 1;
+
+    // // save csv with new dataset
+    // rows[clicks].average_rating = new_avg;
+    // rows[clicks].num_ratings = n_r;
+    // json = JSON.stringify(rows);
 
 }
 

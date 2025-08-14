@@ -8,6 +8,7 @@ var rows = JSON.parse('{{ site.data.questions | jsonify }}');
 var clicks = 0;
 var q;
 var game_init = false;
+var rating_made = false;
 
 // Randomize data
 function shuffle(array) {
@@ -65,7 +66,7 @@ function pickQ() {
 
         stars = '<div class="rating">'
         for (let i = 4; i >= 0; i--){
-            stars += '<span class="star" onclick="rateQuestion('+(i+1)+')">&#9734;</span>';
+            stars += '<span class="star pre" onclick="rateQuestion('+(i+1)+')">&#9734;</span>';
         }
         stars += '</div>';
 
@@ -96,30 +97,43 @@ function addtlInfo() {
 // Rate the question
 function rateQuestion(n) {
 
-    stars = document.getElementsByClassName("star");
+    // this if statement ensures we only take one rating per question visi
+    if (!rating_made) {
 
-    // reset class names
-    let i = 0;
-    while (i < 5) {
-        stars[i].className = "star";
-        i++;
+        stars = document.getElementsByClassName("star");
+
+        // reset class names
+        let i = 0;
+        while (i < 5) {
+            stars[i].className = "star";
+            i++;
+        }
+
+        // add coloring
+        i = 4;
+        while (i > (4-n)) {
+            stars[i].classList.add("active");
+            i--;
+        }
+        while (i >= 0) {
+            stars[i].classList.add("inactive");
+            i--;
+        }
+
+        // // update dataset with new rating
+        // avg_r = rows[clicks].average_rating;
+        // n_r = rows[clicks].num_ratings;
+        // new_avg = (avg_r*n_r + r) / (n_r + 1);
+        // n_r += 1;
+
+        // // save csv with new dataset
+        // rows[clicks].average_rating = new_avg;
+        // rows[clicks].num_ratings = n_r;
+        // json = JSON.stringify(rows);
+
+        rating_made = true;
+
     }
-
-    // add coloring
-    for (let i = 4; i > (4-n); i--){
-        stars[i].classList.add("active");
-    }
-
-    // // update dataset with new rating
-    // avg_r = rows[clicks].average_rating;
-    // n_r = rows[clicks].num_ratings;
-    // new_avg = (avg_r*n_r + r) / (n_r + 1);
-    // n_r += 1;
-
-    // // save csv with new dataset
-    // rows[clicks].average_rating = new_avg;
-    // rows[clicks].num_ratings = n_r;
-    // json = JSON.stringify(rows);
 
 }
 
@@ -130,6 +144,9 @@ function playGame() {
     if (!game_init) {
         start();
     }
+
+    // reset ratings flag
+    rating_made = false;
     pickQ();
 
 }

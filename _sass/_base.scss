@@ -392,17 +392,26 @@ p.show {
   font-size: 26px;
 }
 
-.rating > span:hover:before,
-.rating > span:hover ~ span:before {
+.rating > span.pre:hover:before,
+.rating > span.pre:hover ~ span.pre:before {
   content: "\2605";
   position: absolute;
   color: $cmu-color;
   cursor: pointer;
 }
 
-.rating > span.active:before {
+.rating > span.active:before,
+.rating > span.active ~ span.active:before {
   content: "\2605";
   position: absolute;
   color: lighten($cmu-color-dark, 15%);
 }
 
+.rating > span.inactive {
+  color: lighten($cmu-color-dark, 15%);
+}
+
+.rating > span.inactive:hover {
+  color: lighten($cmu-color-dark, 15%);
+  cursor: default;
+}

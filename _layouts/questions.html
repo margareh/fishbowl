@@ -2,6 +2,8 @@
 layout: default
 ---
 
+<script src="https://unpkg.com/sheetrock@1.2.0/dist/sheetrock.min.js"></script>
+
 <div class="home">
 
   {%- if page.title -%}
@@ -18,17 +20,30 @@ layout: default
           <tr>
             <th class="col1">ID</th>
             <th class="col2">Question</th>
-            <th class="col3">Rating</th>
+            <th class="col3">Rating (#)</th>
           </tr>
         </thead>
-        <tbody class="scrollable">
-        {%- for question in site.data.questions -%}
-        <tr>
-          <td class="col1">{{ question.id }}</td>
-          <td class="col2">{{ question.text }}</td>
-          <td class="col3">{{ question.average_rating }}</td>
-        </tr>
-        {%- endfor -%}
+        <tbody id="table_rows" class="scrollable">
+        <script>
+          var data_url = 'https://docs.google.com/spreadsheets/d/1XUFT81fWkYLyo4CMqjqrQDiAwZPBxPIAs9KQnb8myhs/edit?gid=0#gid=0'; // for pulling data
+          d = document.getElementById('table_rows');
+          sheetrock({
+            url: data_url,
+            query: "select A,B,D,E",
+            target: d,
+            rowTemplate: function(row){
+              if (row.cells.average_rating == '') {
+                r = 'n/a';
+              } else {
+                r = row.cells.average_rating;
+              }
+              item1 = '<td class="col1">'+row.cells.id+'</td>';
+              item2 = '<td class="col2">'+row.cells.text+'</td>';
+              item3 = '<td class="col3">'+r+' ('+row.cells.num_ratings+')</td>';
+              return '<tr>'+item1+item2+item3+'</tr>'
+            }
+          });
+        </script>
         </tbody>
     </table>
     </div>

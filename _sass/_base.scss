@@ -369,13 +369,17 @@ p.game {
   width: 90%;
 }
 
+p.show {
+  display: inline-block;
+  font-size: 16px;
+}
+
 p.hidden {
   display: none;
 }
 
-p.show {
-  display: inline-block;
-  font-size: 16px;
+div.hidden {
+  display: none;
 }
 
 .rating {

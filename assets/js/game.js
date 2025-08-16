@@ -1,18 +1,9 @@
-// ---
-// title: game.js
-// ---
-
-// load the data
-// var n = '{{ site.data.questions | size }}';
-// var rows = JSON.parse('{{ site.data.questions | jsonify }}');
+// variable definitions
 var clicks = 0;
-var q;
+var data, sheet_data, n;
 var game_init = false;
 var rating_made = false;
-var data_url = 'https://docs.google.com/spreadsheets/d/1XUFT81fWkYLyo4CMqjqrQDiAwZPBxPIAs9KQnb8myhs/edit?gid=0#gid=0'; // for pulling data
 var ratings_url = 'https://docs.google.com/spreadsheets/d/1XUFT81fWkYLyo4CMqjqrQDiAwZPBxPIAs9KQnb8myhs/edit?gid=525843178#gid=525843178'; // for saving ratings
-
-var sheet_data = sheetrock({url: data_url});
 
 // Randomize data
 function shuffle(array) {
@@ -39,9 +30,18 @@ function start() {
     d = document.getElementById("game");
     d.classList.add("game-play");
     d.classList.remove("game-start");
-    shuffle(sheet_data);
-    game_init = true;
 
+    // parse data into array
+    rows = document.getElementById("data_table");
+    sheet_data = Array.prototype.map.call(rows.querySelectorAll("tr"), function(tr){
+        return Array.prototype.map.call(tr.querySelectorAll("td"), function(td){
+            return td.innerHTML;
+        });
+    });
+    shuffle(sheet_data);
+    n = sheet_data.length;
+
+    game_init = true;
 }
 
 // Quit the game
@@ -65,24 +65,18 @@ function pickQ() {
         clicks = 0;
     } else {
 
-        // TODO: update to pull from google sheets
-        q = sheet_data[clicks].text;
-        f = sheet_data[clicks].follow_ups;
-        r = sheet_data[clicks].average_rating;
-        nr = sheet_data[clicks].num_ratings;
+        q = sheet_data[clicks][1];
+        f = sheet_data[clicks][2];
 
         stars = '<div class="rating">'
         for (let i = 4; i >= 0; i--){
             stars += '<span class="star pre" onclick="rateQuestion('+(i+1)+')">&#9734;</span>';
         }
-        if (rating_made) {
-            stars += '<p>Avg: '+r+'('+nr+')</p>'; // TODO: add average rating
-        }
         stars += '</div>';
 
         // continue displaying this and picking new questions
         questionHtml = '<p class="game"><b>Question:</b> ' + q + '</p>';
-        if (f != null) {
+        if (f.length > 0) {
             extraHtml = '<div class="addtl"><button class="addtl" onclick="addtlInfo()">Follow-ups</button><p class="hidden game" id="dropTxt">'+f+'</p></div>';
         } else {
             extraHtml = '';

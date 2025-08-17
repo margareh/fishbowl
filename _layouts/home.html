@@ -5,6 +5,26 @@ layout: default
 <script src="https://unpkg.com/sheetrock@1.2.0/dist/sheetrock.min.js"></script>
 <script src="{{ site.baseurl }}/assets/js/game.js" type="text/javascript"></script>
 
+<script>
+  window.addEventListener("load", function() {
+  const form = document.getElementById('rating_form');
+  form.addEventListener("submit", function(e) {
+    document.body.style.cursor='wait';
+    e.preventDefault();
+    const data = new FormData(form);
+    const action = e.target.action;
+    fetch(action, {
+      method: 'POST',
+      body: data,
+    })
+    .then(() => {
+      document.body.style.cursor='default';
+      // document.getElementById("ratings_check").innerHTML='&check;';
+    })
+  });
+});
+</script>
+
 <div id="data" class="hidden">
   <table id="data_table">
   <tbody id="data_rows">

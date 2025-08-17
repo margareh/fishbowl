@@ -69,7 +69,7 @@ function pickQ() {
         f = sheet_data[clicks][2];
         id = sheet_data[clicks][0];
 
-        stars = '<div class="rating">'
+        stars = '<div class="rating"><p class="check" id="ratings_check" style="color: green; font-size: 16px;"></p>'
         for (let i = 4; i >= 0; i--){
             stars += '<span class="star pre" onclick="rateQuestion('+(i+1)+','+id+')">&#9734;</span>';
         }
@@ -129,7 +129,7 @@ function rateQuestion(n, id) {
         document.getElementById("rating_id").value = id;
         document.getElementById("rating_value").value = n;
         document.getElementById("rating_sheet_name").value = "Ratings";
-        document.getElementById("rating_form").submit();
+        document.getElementById("rating_form").requestSubmit();
 
         // Flag rating as being submitted so users can't do this twice
         rating_made = true;

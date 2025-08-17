@@ -4,6 +4,26 @@ layout: default
 
 <script src="https://unpkg.com/sheetrock@1.2.0/dist/sheetrock.min.js"></script>
 
+<script>
+  window.addEventListener("load", function() {
+  const form = document.getElementById('new_questions');
+  form.addEventListener("submit", function(e) {
+    document.body.style.cursor='wait';
+    e.preventDefault();
+    const data = new FormData(form);
+    const action = e.target.action;
+    fetch(action, {
+      method: 'POST',
+      body: data,
+    })
+    .then(() => {
+      document.body.style.cursor='default';
+      // document.getElementById("check").innerHTML='&check;';
+    })
+  });
+});
+</script>
+
 <div class="home">
 
   {%- if page.title -%}
@@ -14,6 +34,7 @@ layout: default
     <div class="home-col-wrapper">
       
       {{ content }}
+      <p class="check" id="check" style="color: green;"></p>
 
       <table class="questions">
         <thead class="fixed">

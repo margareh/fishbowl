@@ -8,5 +8,7 @@ id: questions
 order: 2
 ---
 
-Browse the list of questions included in the game below, or submit your own [here](https://forms.gle/Y7wTt35FV6GHj2Be7)!
+Browse the list of questions included in the game below, or submit your own here:
+
+{% include question-form.html %}
 

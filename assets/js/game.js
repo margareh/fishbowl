@@ -70,7 +70,7 @@ function pickQ() {
 
         stars = '<div class="rating">'
         for (let i = 4; i >= 0; i--){
-            stars += '<span class="star pre" onclick="rateQuestion('+(i+1)+')">&#9734;</span>';
+            stars += '<span class="star pre" onclick="rateQuestion('+(i+1)+','+clicks+')">&#9734;</span>';
         }
         stars += '</div>';
 
@@ -99,7 +99,7 @@ function addtlInfo() {
 }
 
 // Rate the question
-function rateQuestion(n) {
+function rateQuestion(n, id) {
 
     // this if statement ensures we only take one rating per question visi
     if (!rating_made) {
@@ -124,17 +124,13 @@ function rateQuestion(n) {
             i--;
         }
 
-        // // update dataset with new rating
-        // avg_r = rows[clicks].average_rating;
-        // n_r = rows[clicks].num_ratings;
-        // new_avg = (avg_r*n_r + r) / (n_r + 1);
-        // n_r += 1;
+        // Update and submit form
+        document.getElementById("rating_id").value = id;
+        document.getElementById("rating_value").value = n;
+        document.getElementById("rating_sheet_name").value = "Ratings";
+        document.getElementById("rating_form").submit();
 
-        // // save csv with new dataset
-        // rows[clicks].average_rating = new_avg;
-        // rows[clicks].num_ratings = n_r;
-        // json = JSON.stringify(rows);
-
+        // Flag rating as being submitted so users can't do this twice
         rating_made = true;
 
     }

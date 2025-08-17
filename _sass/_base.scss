@@ -382,6 +382,10 @@ div.hidden {
   display: none;
 }
 
+table.questions {
+  margin-top: 20px;
+}
+
 .rating {
   unicode-bidi: bidi-override;
   direction: rtl;
@@ -419,4 +423,12 @@ div.hidden {
 .rating > span.inactive:hover {
   color: lighten($cmu-color-dark, 15%);
   cursor: default;
+}
+
+#rating_form {
+  display: none;
+}
+
+input.hidden {
+  display: none;
 }

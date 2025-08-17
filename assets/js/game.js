@@ -67,10 +67,11 @@ function pickQ() {
 
         q = sheet_data[clicks][1];
         f = sheet_data[clicks][2];
+        id = sheet_data[clicks][0];
 
         stars = '<div class="rating">'
         for (let i = 4; i >= 0; i--){
-            stars += '<span class="star pre" onclick="rateQuestion('+(i+1)+','+clicks+')">&#9734;</span>';
+            stars += '<span class="star pre" onclick="rateQuestion('+(i+1)+','+id+')">&#9734;</span>';
         }
         stars += '</div>';
 
